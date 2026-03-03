@@ -8,6 +8,7 @@
     "test": "jest",
     "build": "prisma generate && esbuild src/server.ts --bundle --platform=node --target=node20 --outfile=dist/server.js --external:bcrypt --external:prisma --external:@prisma/client",
     "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
     "debug": "ts-node-dev --respawn --inspect --transpile-only src/server.ts"
   },
   "keywords": [],
