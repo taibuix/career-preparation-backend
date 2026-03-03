@@ -101,3 +101,18 @@ Server runs at:
 http://localhost:5000
 
 ```
+
+## 🔁 CI/CD Pipeline (GitHub Actions)
+
+This repo now includes:
+- CI workflow: `.github/workflows/ci.yml`
+- CD workflow (EC2 deploy): `.github/workflows/cd-ec2.yml`
+
+CD deploy runs when CI succeeds on `main` (or manually via `workflow_dispatch`).
+
+Set these repository secrets in GitHub before using CD:
+- `EC2_HOST` (example: `3.144.30.109`)
+- `EC2_PORT` (usually `22`)
+- `EC2_USER` (example: `ubuntu`)
+- `EC2_SSH_PRIVATE_KEY` (private key content for SSH)
+- `EC2_APP_DIR` (example: `/home/ubuntu/career-preparation-backend`)
