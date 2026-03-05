@@ -28,8 +28,10 @@ jobs:
           port: ${{ secrets.EC2_PORT || 22 }}
           script_stop: true
           script: |
-            set -e
+            set -euo pipefail
+            echo "Deploy dir: ${{ secrets.EC2_APP_DIR }}"
             cd "${{ secrets.EC2_APP_DIR }}"
+            pwd
             git fetch --all
             git checkout main
             git pull origin main
