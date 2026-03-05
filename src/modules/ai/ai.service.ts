@@ -7,7 +7,8 @@ const openai = new OpenAI({
 });
 
 export const generateInterviewQuestions = async (
-    role: string
+    role: string,
+    interviewType: "TECHNICAL" | "BEHAVIORAL" | "MIXED" = "TECHNICAL"
 ): Promise<string[]> => {
     const response = await openai.chat.completions.create({
         model: "gpt-4.1-nano",
@@ -15,11 +16,11 @@ export const generateInterviewQuestions = async (
             {
                 role: "system",
                 content:
-                    "You are a technical interviewer. Generate 5 concise interview questions.",
+                    "You are an interviewer. Generate 5 concise interview questions.",
             },
             {
                 role: "user",
-                content: `Generate 5 interview questions for a ${role} position. Return them as a numbered list.`,
+                content: `Generate 5 ${interviewType.toLowerCase()} interview questions for a ${role} position. Return them as a numbered list.`,
             },
         ],
         temperature: 0.7,

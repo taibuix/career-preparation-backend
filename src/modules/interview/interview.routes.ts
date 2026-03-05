@@ -15,6 +15,12 @@ router.use(authMiddleware);
  *     tags: [Interview]
  *     security:
  *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CreateInterviewSession'
  *     responses:
  *       201:
  *         description: Session created successfully

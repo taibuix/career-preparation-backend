@@ -2,16 +2,32 @@ import prisma from "../../config/prisma";
 import { generateFeedback, generateInterviewQuestions } from "../ai/ai.service";
 import { AIFeedback } from "../ai/ai.type";
 
+const ALLOWED_INTERVIEW_TYPES = ["TECHNICAL", "BEHAVIORAL", "MIXED"] as const;
+type InterviewType = (typeof ALLOWED_INTERVIEW_TYPES)[number];
+
+const normalizeInterviewType = (
+    interviewType?: string
+): InterviewType | undefined => {
+    if (!interviewType) return undefined;
+    const normalizedType = interviewType.trim().toUpperCase();
+    return ALLOWED_INTERVIEW_TYPES.includes(normalizedType as InterviewType)
+        ? (normalizedType as InterviewType)
+        : undefined;
+};
+
 export const createSession = async (
     userId: string,
     role: string,
-    resumeId?: string
+    resumeId?: string,
+    interviewType?: string
 ) => {
+    const normalizedInterviewType = normalizeInterviewType(interviewType);
     const session = await prisma.interviewSession.create({
         data: {
             userId,
             role,
             resumeId: resumeId || null,
+            interviewType: normalizedInterviewType,
         },
         include: {
             questions: true,
@@ -19,7 +35,10 @@ export const createSession = async (
     });
 
     // Generate AI questions
-    const questions = await generateInterviewQuestions(role);
+    const questions = await generateInterviewQuestions(
+        role,
+        normalizedInterviewType || "TECHNICAL"
+    );
 
     for (const question of questions) {
         await prisma.interviewQuestion.create({

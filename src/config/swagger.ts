@@ -31,6 +31,11 @@ const options: swaggerJsdoc.Options = {
                             type: "string",
                             example: "Backend Developer",
                         },
+                        interviewType: {
+                            type: "string",
+                            enum: ["TECHNICAL", "BEHAVIORAL", "MIXED"],
+                            example: "TECHNICAL",
+                        },
                     },
                 },
                 SubmitAnswer: {
@@ -63,6 +68,10 @@ const options: swaggerJsdoc.Options = {
                         id: { type: "string" },
                         userId: { type: "string" },
                         role: { type: "string" },
+                        interviewType: {
+                            type: "string",
+                            enum: ["TECHNICAL", "BEHAVIORAL", "MIXED"],
+                        },
                         status: { type: "string", enum: SessionStatus },
                         createdAt: { type: "string", format: "date-time" },
                         updatedAt: { type: "string", format: "date-time" },

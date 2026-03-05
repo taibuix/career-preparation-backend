@@ -9,12 +9,13 @@ export const createSession = async (
 ) => {
     try {
         const userId = req.user!.id;
-        const { role, resumeId } = req.body;
+        const { role, resumeId, interviewType } = req.body;
 
         const session = await InterviewService.createSession(
             userId,
             role,
-            resumeId
+            resumeId,
+            interviewType
         );
 
         res.status(201).json(session);
@@ -107,4 +108,3 @@ export const getAnalytics = async (
     next(error);
   }
 };
-
